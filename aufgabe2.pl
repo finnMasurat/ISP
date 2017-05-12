@@ -1,3 +1,5 @@
+:- use_module(library(clpfd)).
+
 sudoku(Rows) :-
         length(Rows, 9), maplist(same_length(Rows), Rows),
         append(Rows, Vs), Vs ins 1..9,
@@ -23,3 +25,6 @@ problem(1, [[_,_,_,_,_,_,_,_,_],
             [5,_,_,_,_,_,_,7,3],
             [_,_,2,_,1,_,_,_,_],
             [_,_,_,_,4,_,_,_,9]]).
+
+
+do() :- problem(1, Rows), sudoku(Rows), maplist(writeln, Rows).
