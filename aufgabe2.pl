@@ -1,16 +1,16 @@
 :- use_module(library(clpfd)).
 
 sudoku(Rows) :-
-        append(Rows, Vs),                   % Konkatination von Rows in Vs. True wenn Rows eine Liste von Vs ist
-        Vs ins 1..9,                        % Vs sind Elemente von von 1..9
-        maplist(all_different, Rows),       % True wenn all_different auf Rows angewendet werden kann
+        append(Rows, Vs),
+        Vs ins 1..9,
+        maplist(all_different, Rows),
         transpose(Rows, Columns),
-        maplist(all_different, Columns),    % Transponiert Matrix für den Aufbau
-        Rows = [A,B,C,D,E,F,G,H,I],         % Rows mit Variablen
-        blocks(A, B, C),                    %
-        blocks(D, E, F),                    %
-        blocks(G, H, I),                    %
-        label(Vs).                          % Labeling der Liste
+        maplist(all_different, Columns),
+        Rows = [A,B,C,D,E,F,G,H,I],
+        blocks(A, B, C),
+        blocks(D, E, F),
+        blocks(G, H, I),
+        label(Vs).
 
 blocks([], [], []).
 blocks([A,B,C|Bs1], [D,E,F|Bs2], [G,H,I|Bs3]) :-
