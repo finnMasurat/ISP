@@ -10,6 +10,8 @@ from __future__ import division
 from __future__ import print_function
 
 import numpy as np
+from numpy import dot, transpose
+from numpy.linalg import inv
 
 class LinearRegression(object):
     """Linear Regression Model
@@ -41,35 +43,33 @@ class LinearRegression(object):
         # m Samples mit n Attributen (exclusive Bias)
         m, n = np.shape(X)
 
-        # TODO: X spaltenweise um x_0 = 1 (korrespondiert mit Bias-Term) ergänzen
         # damit sollte X die Form [n_samples, n_features + 1] bekommen
+        ones = np.ones(len(X))
+        X = np.column_stack((ones, X))
+        Xt = transpose(X)
 
-        # TODO: Initialisierung der Gewichte (inklusive Bias-Term)
-        # self.weights in der Form [n_features + 1]
-        self.weights = …
+        self.weights = np.array([np.random.uniform(-3, 3) for _ in range(n+1)])
 
         # Array zum Speichern des Errors für jeden SGD-Schritt
         self.cost = []
 
-        # TODO: Hypothese h(x)
-        h_x = lambda w, X: …
-        # alternativ als Funktion: def h_x(w,X): …
+        h_x = lambda w, X: dot(X,w)
 
-        # TODO: Sum of Squared Errors (SSE)
-        sse = lambda w, X, y: …
-        # alternativ als Funktion: def sse(w,X,y): …
+        def sse(w,X,y):
+            current_sum = 0
+            for i in range(1, m):
+                current_sum = np.add(current_sum, np.power(np.subtract(h_x(w, X[i]),y[i]),2))
+            return 0.5*current_sum
 
         # SGD Schleife über Iterationen
         for _ in range(iterations):
             # Schleife über Datensätze
             for i in range(m):
 
-                # TODO: Update der Gewichte
-                self.weights = …
+                # term = y[i] - (t(w) %*% X[i,])
+                term = y[i] - np.matmul(X[i,], self.weights)
 
-                # alternativ Schleife über Parameter (n+1 durch Bias-Term)
-                # for j in range(n+1):
-                #   self.weights[j] = …
+                self.weights += alpha * (np.transpose(term) * X[i,])
 
             # Berechne SSE des SGD-Schritts mit den aktuallisierten Gewichten
             self.cost = self.cost + [sse(self.weights, X, y)]
@@ -84,6 +84,11 @@ class LinearRegression(object):
         Returns:
           Array der vorhergesagten Zielvariablen in der Form [n_samples]
         """
-        # TODO: Berechnen der Zielvariablen über die Hypothese
-        # folgende Zeile löschen
-        raise NotImplementedError("Noch nicht implementiert!")
+
+        # Bias in X einfügen
+        einsen = np.ones(np.shape(X)[0])
+        einsen = np.reshape(einsen, (np.shape(einsen)[0], 1))
+        X = np.concatenate((einsen, X), 1)
+
+        # Formel für Hypothese bei linearer Regression (X*sigma^T)
+        return np.matmul(X, self.weights)

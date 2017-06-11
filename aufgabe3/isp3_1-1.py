@@ -30,6 +30,7 @@ from linear_regression_closed_form import LinearRegression
 
 # Training des Modells
 model = LinearRegression()
+print(X)
 model = model.fit(X,y)
 
 # Plot der Trainingsdaten und der Annäherung

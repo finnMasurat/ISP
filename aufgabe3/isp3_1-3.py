@@ -32,17 +32,19 @@ plt.ylabel("Price in $USD$")
 plt.show()
 
 
-# TODO: Standartisierung der Daten
-df_norm = …
+# Standartisierung der Daten
+df_norm = (df - df.mean()) / (df.max() - df.min()) + 1
+df_norm = df_norm.round(2)
 
-# TODO: Trainingsdaten und Zielvariablen definieren
-X = …
-y = …
+# Trainingsdaten und Zielvariaben definieren
+X = np.transpose(np.vstack((df_norm.as_matrix()[:,0], df_norm.as_matrix()[:,1])))
+y = df_norm.as_matrix()[:,2]
 
-# TODO: Training des Modells
-from … import …
+# Training des Modells
+from linear_regression_sgd import LinearRegression
 
-model = …
+model = LinearRegression()
+model = model.fit(X, y, alpha=0.001, iterations = 8000)
 
 
 # Plot der Error-Kurve über das Training
