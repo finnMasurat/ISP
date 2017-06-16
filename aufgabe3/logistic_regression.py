@@ -43,9 +43,9 @@ class LogisticRegression(object):
 
         # self.weights in der Form [n_features + 1]
         #Drei zufällige Gewichte zwischen -3 und 3 bestimmen und self.weights mit diesen initialisieren
-        random1 = np.random.uniform(-3,3)
-        random2 = np.random.uniform(-3,3)
-        random3 = np.random.uniform(-3,3)
+        random1 = np.random.uniform(-1,1)
+        random2 = np.random.uniform(-1,1)
+        random3 = np.random.uniform(-1,1)
         self.weights = np.array([[random1],[random2],[random3]])
 
         # Array zum Speichern des Errors für jeden SGD-Schritt

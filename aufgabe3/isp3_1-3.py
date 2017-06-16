@@ -33,8 +33,7 @@ plt.show()
 
 
 # Standartisierung der Daten
-df_norm = (df - df.mean()) / (df.max() - df.min()) + 1
-df_norm = df_norm.round(2)
+df_norm = (df - df.mean()) / (df.std())
 
 # Trainingsdaten und Zielvariaben definieren
 X = np.transpose(np.vstack((df_norm.as_matrix()[:,0], df_norm.as_matrix()[:,1])))
