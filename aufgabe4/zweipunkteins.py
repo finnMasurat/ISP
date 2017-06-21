@@ -1,10 +1,15 @@
+import keras
+from keras.models import Sequential
+from keras.datasets import mnist
+import matplotlib.pyplot as plt
 from keras.layers import Dense
-
-
 
 BATCH_SIZE = 128
 NUM_CLASSES = 10
 EPOCHS = 200
+
+# Laden des Datensatzes und Aufteilung in 60.000 Trainings- und 10.000 Testdaten
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 # Transformation der 28x28 Bilder als Vektoren der Länge 28*28
 x_train = x_train.reshape(60000, 784)
@@ -62,4 +67,4 @@ plot_training(training_loss=history.history['loss'],
 # Genauigkeit des trainierten Modells
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
-print('Test accuracy:', score[1])    
+print('Test accuracy:', score[1])
